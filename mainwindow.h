@@ -1,0 +1,33 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include <QMainWindow>
+#include <QMap>
+#include <QVector>
+#include <QPushButton>
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+private:
+    Ui::MainWindow *ui;
+    QMap<QPushButton*, QString> data;
+    QVector<QPushButton*> numberButtons;
+    void initButtonData();
+
+    // slot functions
+    void handleNumberButtonClick();
+    void handleClearButtonClick();
+    void handleEqualButtonClick();
+    void handleBackspaceButtonClick();
+};
+#endif // MAINWINDOW_H
