@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     setGeometry(centralWidget()->geometry());
     statusBar();
     initButtonData();
+    setWindowTitle("Scalculator");
 }
 
 MainWindow::~MainWindow()
