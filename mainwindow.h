@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QVector>
 #include <QPushButton>
+#include "backend.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,8 @@ private:
     Ui::MainWindow *ui;
     QMap<QPushButton*, QString> data;
     QVector<QPushButton*> numberButtons;
+    Backend be;
+
     void initButtonData();
 
     // slot functions

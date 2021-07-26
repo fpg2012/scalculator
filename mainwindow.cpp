@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include <QTimer>
 #include <QDebug>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -59,23 +60,24 @@ void MainWindow::initButtonData() {
 }
 
 void MainWindow::handleNumberButtonClick() {
-    QString str = ui->displayArea->toPlainText();
+    QString str = ui->editArea->toPlainText();
     str.append(data[qobject_cast<QPushButton*>(sender())]);
-    ui->displayArea->setText(str);
+    ui->editArea->setText(str);
 }
 
 void MainWindow::handleBackspaceButtonClick() {
-    QString str = ui->displayArea->toPlainText();
+    QString str = ui->editArea->toPlainText();
     str.truncate(str.length() - 1);
-    ui->displayArea->setText(str);
+    ui->editArea->setText(str);
 }
 
 void MainWindow::handleClearButtonClick() {
-    ui->displayArea->setText("");
+    ui->editArea->setText("");
     setStatusTip("Clear Button Clicked");
 }
 
 void MainWindow::handleEqualButtonClick() {
-    ui->displayArea->setText("");
-    setStatusTip("Equal Button Clicked");
+    std::string input = ui->editArea->toPlainText().toStdString();
+    std::string output = be.calcNoExcp(input);
+    ui->resultArea->setText(QString::fromStdString(output));
 }
