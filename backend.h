@@ -21,8 +21,16 @@ class Backend
 {
 public:
     Backend();
+	~Backend();
     CalcResult calc(std::string input);
     std::string calcNoExcp(std::string input);
+private:
+	int bc_in_pipe[2];
+	int bc_out_pipe[2];
+	int bc_in_fd;
+	int bc_out_fd;
+	FILE* bc_in;
+	FILE* bc_out;
 };
 
 #endif // BACKEND_H

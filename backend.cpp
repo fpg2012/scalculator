@@ -1,9 +1,22 @@
 #include "backend.h"
 #include <sstream>
+#include <cstdio>
+#include <unistd.h>
 
 Backend::Backend()
 {
+	pipe(bc_in_pipe);
+	pipe(bc_out_pipe);
 
+	bc_in = fdopen(bc_in_pipe[1], "w");
+	bc_in_fd = bc_in_pipe[1];
+	bc_out =fdopen(bc_out_pipe[0], "r");
+	bc_out_fd = bc_out_pipe[0];
+}
+
+Backend::~Backend()
+{
+	fprintf(bc_in, "quit\n");
 }
 
 CalcResult::CalcResult(std::string str) : is_error(false), str(str) {
@@ -23,9 +36,26 @@ CalcResult Backend::calc(std::string input) {
 }
 
 std::string Backend::calcNoExcp(std::string input) {
-    int temp = rand() / 1000;
-    std::stringstream ss;
-    ss << temp;
-    return ss.str();
+	pid_t pid;
+	if (pid = fork()) {
+		fprintf(bc_in, "%s\n", input.c_str());
+		fprintf(bc_in, "quit\n");
+		fflush(bc_in);
+		fd_set set;
+		FD_ZERO(&set);
+		FD_SET(bc_out_fd, &set);
+		select(FD_SETSIZE, &set, NULL, NULL, NULL);
+		printf("bc has calculate result\n");
+		char buf[64];
+		fscanf(bc_out, "%s", buf);
+		std::string out(buf);
+		return out;
+	}
+	else {
+		dup2(bc_in_pipe[0], STDIN_FILENO);
+		dup2(bc_out_pipe[1], STDOUT_FILENO);
+		execlp("bc", "bc", NULL);
+		printf("there is no program bc!!!\n");
+	}
 }
 
