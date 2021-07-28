@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <string>
+#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -79,5 +80,27 @@ void MainWindow::handleClearButtonClick() {
 void MainWindow::handleEqualButtonClick() {
     std::string input = ui->editArea->toPlainText().toStdString();
     std::string output = be.calcNoExcp(input);
-    ui->resultArea->setText(QString::fromStdString(output));
+    displayResult(output);
+}
+
+void MainWindow::displayResult(std::string &str) {
+    QString toDisplay;
+    int cnt = 0;
+    for (const char ch : str) {
+       if (cnt % 20 == 0 && cnt != 0) {
+           toDisplay.append('\n');
+       }
+       toDisplay.append(ch);
+       ++cnt;
+    }
+    ui->resultArea->setText(toDisplay);
+    ui->resultArea->setMinimumHeight(10 * ceil((double) cnt / 20));
+    QTimer::singleShot(1, this, &MainWindow::myAdjustSize);
+}
+
+void MainWindow::myAdjustSize() {
+    int width = this->width(), x = this->x(), y = this->y();
+    adjustSize();
+    int height = this->height();
+    resize(width, height);
 }

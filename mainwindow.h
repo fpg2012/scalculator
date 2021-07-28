@@ -32,5 +32,7 @@ private:
     void handleClearButtonClick();
     void handleEqualButtonClick();
     void handleBackspaceButtonClick();
+    void displayResult(std::string &str);
+    void myAdjustSize();
 };
 #endif // MAINWINDOW_H
