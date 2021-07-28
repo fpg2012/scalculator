@@ -38,18 +38,29 @@ CalcResult Backend::calc(std::string input) {
 std::string Backend::calcNoExcp(std::string input) {
 	pid_t pid;
 	if (pid = fork()) {
+		fprintf(bc_in, "scale=10\n");
 		fprintf(bc_in, "%s\n", input.c_str());
 		fprintf(bc_in, "quit\n");
 		fflush(bc_in);
 		fd_set set;
 		FD_ZERO(&set);
 		FD_SET(bc_out_fd, &set);
-		select(FD_SETSIZE, &set, NULL, NULL, NULL);
-		printf("bc has calculate result\n");
-		char buf[64];
-		fscanf(bc_out, "%s", buf);
-		std::string out(buf);
-		return out;
+		struct timeval wait;
+		wait.tv_sec = 1;
+		wait.tv_usec = 0;
+		if (select(FD_SETSIZE, &set, NULL, NULL, &wait))
+		{
+			printf("bc has calculate result\n");
+			char buf[64];
+			fscanf(bc_out, "%s", buf);
+			std::string out(buf);
+			return out;
+		}
+		else
+		{
+			printf("error while calculate\n");
+			return std::string("0");
+		}
 	}
 	else {
 		dup2(bc_in_pipe[0], STDIN_FILENO);
