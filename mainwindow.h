@@ -27,6 +27,9 @@ private:
 
     void initButtonData();
 
+    // events
+//    void keyPressEvent(QKeyEvent *event) override;
+
     // slot functions
     void handleNumberButtonClick();
     void handleClearButtonClick();
@@ -34,5 +37,6 @@ private:
     void handleBackspaceButtonClick();
     void displayResult(std::string &str);
     void myAdjustSize();
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 #endif // MAINWINDOW_H

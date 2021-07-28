@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include <QTimer>
 #include <QDebug>
+#include <QKeyEvent>
 #include <string>
 #include <cmath>
 
@@ -14,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     statusBar();
     initButtonData();
     setWindowTitle("Scalculator");
+    setFocusPolicy(Qt::StrongFocus);
+    installEventFilter(this);
+    ui->editArea->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -99,8 +103,31 @@ void MainWindow::displayResult(std::string &str) {
 }
 
 void MainWindow::myAdjustSize() {
-    int width = this->width(), x = this->x(), y = this->y();
+    int width = this->width();
     adjustSize();
     int height = this->height();
     resize(width, height);
+}
+
+//void MainWindow::keyPressEvent(QKeyEvent *event) {
+
+//}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::KeyPress) {
+        auto *ke = static_cast<QKeyEvent*>(event);
+        if (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return) {
+            handleEqualButtonClick();
+            return true;
+        }
+        else if (ke->key() == Qt::Key_Delete) {
+            handleClearButtonClick();
+            return true;
+        }
+        else if (ke->key() == Qt::Key_Equal) {
+            handleEqualButtonClick();
+            return true;
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
 }
