@@ -51,7 +51,7 @@
            </font>
           </property>
           <property name="focusPolicy">
-           <enum>Qt::ClickFocus</enum>
+           <enum>Qt::StrongFocus</enum>
           </property>
          </widget>
         </item>
@@ -129,6 +129,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Mode</string>
@@ -579,6 +582,9 @@
             </disabled>
            </palette>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>C</string>
           </property>
@@ -1027,6 +1033,9 @@
              </colorrole>
             </disabled>
            </palette>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>⇦</string>

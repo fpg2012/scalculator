@@ -115,19 +115,29 @@ void MainWindow::myAdjustSize() {
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress) {
+        bool flag = false;
         auto *ke = static_cast<QKeyEvent*>(event);
         if (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return) {
             handleEqualButtonClick();
-            return true;
+            flag = true;
         }
         else if (ke->key() == Qt::Key_Delete) {
             handleClearButtonClick();
-            return true;
+            flag = true;
         }
         else if (ke->key() == Qt::Key_Equal) {
             handleEqualButtonClick();
-            return true;
+            flag = true;
         }
+        if (!ui->editArea->hasFocus()) {
+            ui->editArea->setFocus();
+            ui->editArea->moveCursor(QTextCursor::End);
+            int k = ke->key();
+            if (k >= 32 && k <= 126) {
+                ui->editArea->append(QString(static_cast<QChar>(k)));
+            }
+        }
+        return flag;
     }
     return QMainWindow::eventFilter(obj, event);
 }
