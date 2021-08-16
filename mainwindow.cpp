@@ -83,7 +83,7 @@ void MainWindow::handleClearButtonClick() {
 
 void MainWindow::handleEqualButtonClick() {
     std::string input = ui->editArea->toPlainText().toStdString();
-    std::string output = be.calcNoExcp(input);
+    std::string output = be.calc(input);
     displayResult(output);
 }
 

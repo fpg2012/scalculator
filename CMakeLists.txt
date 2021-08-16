@@ -53,7 +53,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets libsevaluator.so)
 
 set_target_properties(scalculator2 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
