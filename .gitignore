@@ -71,3 +71,11 @@ Thumbs.db
 *.dll
 *.exe
 
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+scalculator2
+scalculator2_autogen
+*.deb
+Makefile
+build/
