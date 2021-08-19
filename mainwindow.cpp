@@ -1,22 +1,28 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <QTimer>
+#include <cmath>
+#include <string>
 #include <QDebug>
 #include <QKeyEvent>
-#include <string>
-#include <cmath>
+#include <QTimer>
+#include <QVariant>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), shift_state_(ShiftSin), mode_state_(ModeSimple)
+    : QMainWindow(parent), ui(new Ui::MainWindow), shift_state_(ShiftSin), mode_state_(ModeSimple),
+      itemModel(new QStandardItemModel(this)), myDelegate(new MyDelegate(this))
 {
     ui->setupUi(this);
     setGeometry(centralWidget()->geometry());
-    statusBar();
+    //    statusBar();
     initButtonData();
     setWindowTitle("Scalculator");
     setFocusPolicy(Qt::StrongFocus);
     installEventFilter(this);
     ui->editArea->installEventFilter(this);
+    ui->historyList->setItemDelegate(myDelegate);
+    ui->historyList->setModel(itemModel);
+    ui->historyList->setVisible(false);
+    //    ui->historyList->setStyleSheet("background-color: rgba(250, 250, 250, 0);");
 }
 
 MainWindow::~MainWindow()
@@ -27,6 +33,8 @@ MainWindow::~MainWindow()
 void MainWindow::initButtonData() {
     connect(ui->modeButton, &QPushButton::clicked, this, &MainWindow::handleModeButtonClick);
     connect(ui->rfButton, &QPushButton::clicked, this, &MainWindow::handleRFButton);
+    connect(ui->historyButton, &QPushButton::clicked, this, &MainWindow::handleHistoryButton);
+    connect(ui->historyList, &QListView::clicked, this, &MainWindow::handleHistorySelect);
 
     numberButtons << ui->pushButton_0 << ui->pushButton_1 << ui->pushButton_2 << ui->pushButton_3
                   << ui->pushButton_4 << ui->pushButton_5 << ui->pushButton_6 << ui->pushButton_7
@@ -139,13 +147,13 @@ void MainWindow::handleBackspaceButtonClick() {
 
 void MainWindow::handleClearButtonClick() {
     ui->editArea->setText("");
-    setStatusTip("Clear Button Clicked");
 }
 
 void MainWindow::handleEqualButtonClick() {
     std::string input = ui->editArea->toPlainText().toStdString();
     std::string output = be.calc(input);
     displayResult(output);
+    updateHistoryList(input, output);
 }
 
 void MainWindow::handleShiftButtonClick()
@@ -215,7 +223,19 @@ void MainWindow::handleRFButton()
     handleEqualButtonClick();
 }
 
-void MainWindow::displayResult(std::string &str)
+void MainWindow::handleHistoryButton()
+{
+    ui->historyList->setVisible(!ui->historyList->isVisible());
+}
+
+void MainWindow::handleHistorySelect()
+{
+    QTextCursor temp = ui->editArea->textCursor();
+    QModelIndex index = ui->historyList->currentIndex();
+    temp.insertText("hist[" + QString::number(index.row()) + "]");
+}
+
+void MainWindow::displayResult(const std::string &str)
 {
     QString toDisplay;
     int cnt = 0;
@@ -229,6 +249,22 @@ void MainWindow::displayResult(std::string &str)
     ui->resultArea->setText(toDisplay);
     ui->resultArea->setMinimumHeight(10 * ceil((double) cnt / 20));
     QTimer::singleShot(1, this, &MainWindow::myAdjustSize);
+}
+
+void MainWindow::updateHistoryList(const std::string &input, const std::string &output)
+{
+    QString result = QString::fromStdString(output);
+    if (result.startsWith("Error")) {
+        return;
+    }
+    QString in = QString::fromStdString(input);
+    HistoryItemData hid;
+    hid.input = in;
+    hid.output = result;
+    QStandardItem *item = new QStandardItem();
+    item->setData(QVariant::fromValue(hid), Qt::UserRole + 1);
+    itemModel->appendRow(item);
+    handleClearButtonClick();
 }
 
 void MainWindow::myAdjustSize() {

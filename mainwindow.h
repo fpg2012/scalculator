@@ -2,10 +2,12 @@
 #define MAINWINDOW_H
 
 #include "backend.h"
+#include "mydelegate.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QPushButton>
 #include <QSet>
+#include <QStandardItemModel>
 #include <QVector>
 
 QT_BEGIN_NAMESPACE
@@ -37,6 +39,8 @@ private:
         ModeSimple,
         ModeAdvance,
     } mode_state_;
+    QStandardItemModel *itemModel;
+    MyDelegate *myDelegate;
 
     void initButtonData();
 
@@ -51,7 +55,10 @@ private:
     void handleShiftButtonClick();
     void handleModeButtonClick();
     void handleRFButton();
-    void displayResult(std::string &str);
+    void handleHistoryButton();
+    void handleHistorySelect();
+    void displayResult(const std::string &str);
+    void updateHistoryList(const std::string &input, const std::string &output);
     void myAdjustSize();
     bool eventFilter(QObject *obj, QEvent *event) override;
 };

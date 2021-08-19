@@ -32,8 +32,11 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        historyitemdata.h
         backend.h
         backend.cpp
+        mydelegate.cpp
+        mydelegate.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
