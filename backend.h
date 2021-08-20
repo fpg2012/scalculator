@@ -1,36 +1,24 @@
 #ifndef BACKEND_H
 #define BACKEND_H
+#include "historyitemdata.h"
+#include <map>
+#include <sevaluator.h>
 #include <string>
-
-enum CalcError {
-    Unknown = 0,
-    Math = 1,
-    Parenthesis = 2,
-};
-
-struct CalcResult {
-    bool is_error;
-    std::string str;
-    CalcError ce;
-    CalcResult(std::string str);
-    CalcResult(const char* str);
-    CalcResult(CalcError error);
-};
+#include <QString>
 
 class Backend
 {
 public:
     Backend();
 	~Backend();
-    CalcResult calc(std::string input);
-    std::string calcNoExcp(std::string input);
+    std::string calc(std::string input);
+    int getHistoryListLength();
+    HistoryItemData getKthHistory(int k);
+
 private:
-	int bc_in_pipe[2];
-	int bc_out_pipe[2];
-	int bc_in_fd;
-	int bc_out_fd;
-	FILE* bc_in;
-	FILE* bc_out;
+    std::map<ErrorType, const char *> error_map_;
+    HistoryList *se_hist_list_;
+    void initErrorMap();
 };
 
 #endif // BACKEND_H

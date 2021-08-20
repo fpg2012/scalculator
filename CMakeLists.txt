@@ -32,8 +32,11 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        historyitemdata.h
         backend.h
         backend.cpp
+        mydelegate.cpp
+        mydelegate.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -53,7 +56,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets libsevaluator.so)
 
 set_target_properties(scalculator2 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

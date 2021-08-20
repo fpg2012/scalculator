@@ -12,7 +12,7 @@ Architecture: amd64
 Essential: no
 Section: utils
 Priority: optional
-Depends: libqt5gui5, bc
+Depends: libqt5gui5, libsevaluator
 Maintainer: nth233<fpg2012@yeah.net>
 Installed-Size: 1
 Description: simple calculator with big number support.""" > pkg-debian/DEBIAN/control
