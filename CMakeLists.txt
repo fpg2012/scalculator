@@ -81,3 +81,6 @@ set_target_properties(scalculator2 PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(scalculator2)
 endif()
+
+
+install(TARGETS scalculator2 DESTINATION bin)
