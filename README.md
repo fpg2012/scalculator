@@ -1,8 +1,8 @@
 # Scalculator
 
-Simple yet scalable calculator
+Simple yet full-fledged calculator, with [Sevaluator](https://github.com/fpg2012/sevaluator) as backend.
 
-currently under devlopment...
+![current version](./screenshots/v1.0.png)
 
-![current version](./screenshots/0.0.2-indev.png)
+Big number is supported.
 

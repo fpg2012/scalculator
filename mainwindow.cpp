@@ -279,7 +279,6 @@ void MainWindow::updateHistoryList(const std::string &input, const std::string &
     QStandardItem *item = new QStandardItem();
     item->setData(QVariant::fromValue(hid), Qt::UserRole + 1);
     itemModel->appendRow(item);
-    handleClearButtonClick();
 }
 
 void MainWindow::myAdjustSize() {
@@ -306,6 +305,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
             flag = true;
         } else if (ke->key() == Qt::Key_Tab) {
             handleRFButton();
+            flag = true;
+        } else if (ke->key() == Qt::Key_Shift) {
+            handleShiftButtonClick();
             flag = true;
         }
         if (!ui->editArea->hasFocus()) {
@@ -344,6 +346,7 @@ void MainWindow::showUsageDialog()
         tr("Usage notes"),
         tr("Usage Notes:"
            "<ol>"
+           "<li>shortcuts: enter '=', delete 'C', tab 'R->F', Shift '⇧'</li>"
            "<li>functions, such a <code>sin</code>, its parameters should be encapsulated in a "
            "pair of '[]'</li>"
            "<li>press 'History' button to show history list, history result would be inserted if "
