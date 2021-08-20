@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/sh -e
 
-mkdir build
+mkdir -p build
 cd build
 cmake ..
 make
