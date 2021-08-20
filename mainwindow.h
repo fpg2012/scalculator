@@ -43,6 +43,7 @@ private:
     MyDelegate *myDelegate;
 
     void initButtonData();
+    void initMenu();
 
     // events
 //    void keyPressEvent(QKeyEvent *event) override;
@@ -61,5 +62,8 @@ private:
     void updateHistoryList(const std::string &input, const std::string &output);
     void myAdjustSize();
     bool eventFilter(QObject *obj, QEvent *event) override;
+
+    void showAboutDialog();
+    void showUsageDialog();
 };
 #endif // MAINWINDOW_H

@@ -4,6 +4,7 @@
 #include <string>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QMessageBox>
 #include <QTimer>
 #include <QVariant>
 
@@ -15,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     setGeometry(centralWidget()->geometry());
     //    statusBar();
     initButtonData();
+    initMenu();
     setWindowTitle("Scalculator");
     setFocusPolicy(Qt::StrongFocus);
     installEventFilter(this);
@@ -112,6 +114,19 @@ void MainWindow::initButtonData() {
                  << ui->pushButton_ln << ui->pushButton_lg << ui->pushButton_log2
                  << ui->pushButton_exp;
     twoParamFunc << ui->pushButton_root;
+}
+
+void MainWindow::initMenu()
+{
+    auto *aboutAction = new QAction(tr("&about"), this);
+    auto *usageAction = new QAction(tr("&usage"), this);
+    //    auto *settingAction = new QAction(tr("Setting"), this);
+
+    connect(aboutAction, &QAction::triggered, this, &MainWindow::showAboutDialog);
+    connect(usageAction, &QAction::triggered, this, &MainWindow::showUsageDialog);
+
+    menuBar()->addAction(usageAction);
+    menuBar()->addAction(aboutAction);
 }
 
 void MainWindow::handleNumberButtonClick()
@@ -304,4 +319,45 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         return flag;
     }
     return QMainWindow::eventFilter(obj, event);
+}
+
+void MainWindow::showAboutDialog()
+{
+    QMessageBox::about(
+        this,
+        tr("about"),
+        "<p><b>Scalculator</b>, simple but full-fledged calculator<br>"
+        "with <b>Sevaluator</b> as backend to evaluate expressions.</p>"
+        "<ul><li><a href='https://github.com/fpg2012/scalculator'> "
+        "https://github.com/fpg2012/scalculator</a></li>"
+        "<li><a "
+        "href='https://github.com/fpg2012/sevaluator'>https://github.com/fpg2012/sevaluator</a></"
+        "li></ul>"
+        "Copyright nth233&lt;fpg2012@yeah.net&gt;, chikangxi&lt;chikangxi@hotmail.com&gt;, Meng "
+        "Yuan. ");
+}
+
+void MainWindow::showUsageDialog()
+{
+    QMessageBox::about(
+        this,
+        tr("Usage notes"),
+        tr("Usage Notes:"
+           "<ol>"
+           "<li>functions, such a <code>sin</code>, its parameters should be encapsulated in a "
+           "pair of '[]'</li>"
+           "<li>press 'History' button to show history list, history result would be inserted if "
+           "you click any item in the list</li>"
+           "<li>press 'Mode' button to show more advance buttons</li>"
+           "<li>press '⇧' button to switch between <code>sin</code>, <code>asin</code> and "
+           "<code>sec</code> </li>"
+           "<li>big number is supported</li>"
+           "<li>special functions, 'hist[n]' refers to (n-1)th historical result, 'ans' refers to "
+           "the last result</li>"
+           "<li>root[a, k] means the kth root of a</li>"
+           "<li>press R->F to convert the result to float number instead of fractions</li>"
+           "<li>random[] function generates an integer uniformly at random between 0 and 256, this "
+           "feature "
+           "might change in future versions</li>"
+           "</ol>"));
 }
