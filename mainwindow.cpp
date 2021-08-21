@@ -312,10 +312,10 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         }
         if (!ui->editArea->hasFocus()) {
             ui->editArea->setFocus();
-            ui->editArea->moveCursor(QTextCursor::End);
             int k = ke->key();
             if (k >= 32 && k <= 126) {
-                ui->editArea->append(QString(static_cast<QChar>(k)));
+                QTextCursor temp = ui->editArea->textCursor();
+                temp.insertText(QString(static_cast<QChar>(k)).toLower());
             }
         }
         return flag;
