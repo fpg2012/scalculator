@@ -1,0 +1,3 @@
+[submodule "sevaluator"]
+	path = sevaluator
+	url = https://gitee.com/nth233/sevaluator

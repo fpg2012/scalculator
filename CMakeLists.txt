@@ -37,6 +37,7 @@ set(PROJECT_SOURCES
         backend.cpp
         mydelegate.cpp
         mydelegate.h
+	sevaluator/sevaluator.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -56,7 +57,20 @@ else()
     endif()
 endif()
 
-target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets libsevaluator.so)
+add_custom_target(
+	sevaluator_lib
+	COMMAND make
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/sevaluator
+	)
+include_directories(sevaluator)
+
+target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+	${CMAKE_SOURCE_DIR}/sevaluator/libsevaluator.a
+	gmp
+	mpfr
+	)
+
+add_dependencies(scalculator2 sevaluator_lib)
 
 set_target_properties(scalculator2 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -67,3 +81,6 @@ set_target_properties(scalculator2 PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(scalculator2)
 endif()
+
+
+install(TARGETS scalculator2 DESTINATION bin)
