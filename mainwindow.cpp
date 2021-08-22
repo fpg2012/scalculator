@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     initButtonData();
     initMenu();
     setWindowTitle("Scalculator");
+    setWindowIcon(QIcon(":/pic/icon"));
     setFocusPolicy(Qt::StrongFocus);
     installEventFilter(this);
     ui->editArea->installEventFilter(this);

@@ -2,4 +2,7 @@
     <qresource prefix="/font">
         <file>jbmono.ttf</file>
     </qresource>
+    <qresource prefix="/pic">
+        <file alias="icon">scalculator_icon.png</file>
+    </qresource>
 </RCC>
