@@ -2,10 +2,12 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QFontDatabase>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QFontDatabase::addApplicationFont(":/font/jbmono.ttf");
     MainWindow w;
     w.show();
     QDesktopWidget *temp = QApplication::desktop();

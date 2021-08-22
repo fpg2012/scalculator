@@ -38,6 +38,7 @@ set(PROJECT_SOURCES
         mydelegate.cpp
         mydelegate.h
 	sevaluator/sevaluator.h
+        resource.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

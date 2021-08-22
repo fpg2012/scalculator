@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/font">
+        <file>jbmono.ttf</file>
+    </qresource>
+</RCC>
