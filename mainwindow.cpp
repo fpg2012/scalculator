@@ -187,6 +187,9 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_lf->setText("[");
         data[ui->pushButton_rt] = "]";
         ui->pushButton_rt->setText("]");
+
+        data[ui->pushButton_root_2] = "%";
+        ui->pushButton_root_2->setText("%");
     } else if (shift_state_ == ShiftAsin) {
         shift_state_ = ShiftSec;
         data[ui->pushButton_sin] = "sec";
@@ -201,6 +204,7 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_rt->setText("]");
         data[ui->pushButton_dot] = ",";
         ui->pushButton_dot->setText(",");
+
     } else {
         shift_state_ = ShiftSin;
         data[ui->pushButton_sin] = "sin";
@@ -215,6 +219,9 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_rt->setText(")");
         data[ui->pushButton_dot] = ".";
         ui->pushButton_dot->setText(".");
+
+        data[ui->pushButton_root_2] = "√";
+        ui->pushButton_root_2->setText("√");
     }
 }
 
@@ -337,7 +344,7 @@ void MainWindow::showAboutDialog()
         "href='https://github.com/fpg2012/sevaluator'>https://github.com/fpg2012/sevaluator</a></"
         "li></ul>"
         "Copyright nth233&lt;fpg2012@yeah.net&gt;, chikangxi&lt;chikangxi@hotmail.com&gt;, Meng "
-        "Yuan. ");
+        "Yuan 2021 ");
 }
 
 void MainWindow::showUsageDialog()

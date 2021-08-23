@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Scalcualtor
+Name=scalcualtor
 Comment=Simple but full-fledged calculator
 Keywords=calc;calculator;scalc;scalculator;
-Exec=scalculator2
+Exec=scalculator
 Icon=scalculator
 Terminal=false
 Type=Application

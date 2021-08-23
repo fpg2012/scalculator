@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(scalculator2 VERSION 0.1 LANGUAGES CXX)
+project(scalculator VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -42,17 +42,17 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(scalculator2
+    qt_add_executable(scalculator
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
 else()
     if(ANDROID)
-        add_library(scalculator2 SHARED
+        add_library(scalculator SHARED
             ${PROJECT_SOURCES}
         )
     else()
-        add_executable(scalculator2
+        add_executable(scalculator
             ${PROJECT_SOURCES}
         )
     endif()
@@ -65,23 +65,23 @@ add_custom_target(
 	)
 include_directories(sevaluator)
 
-target_link_libraries(scalculator2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+target_link_libraries(scalculator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
 	${CMAKE_SOURCE_DIR}/sevaluator/libsevaluator.a
 	gmp
 	mpfr
 	)
 
-add_dependencies(scalculator2 sevaluator_lib)
+add_dependencies(scalculator sevaluator_lib)
 
-set_target_properties(scalculator2 PROPERTIES
+set_target_properties(scalculator PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(scalculator2)
+    qt_finalize_executable(scalculator)
 endif()
 
 
-install(TARGETS scalculator2 DESTINATION bin)
+install(TARGETS scalculator DESTINATION bin)
