@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/font">
-        <file>jbmono.ttf</file>
+        <file>misc/jbmono.ttf</file>
     </qresource>
     <qresource prefix="/pic">
-        <file alias="icon">scalculator_icon.png</file>
+        <file alias="icon">misc/scalculator.png</file>
     </qresource>
 </RCC>
