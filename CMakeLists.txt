@@ -85,3 +85,6 @@ endif()
 
 
 install(TARGETS scalculator DESTINATION bin)
+install(FILES misc/scalculator.svg DESTINATION share/icons/hicolor/scalcable/apps)
+install(
+	CODE "execute_process(COMMAND sudo desktop-file-install misc/scalculator.desktop)")
