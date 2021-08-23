@@ -6,4 +6,4 @@ Exec=scalculator
 Icon=scalculator
 Terminal=false
 Type=Application
-Categories=Utility;Calculator;
+Categories=Accessories;Utility;Calculator;
