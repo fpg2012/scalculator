@@ -37,7 +37,7 @@ set(PROJECT_SOURCES
         backend.cpp
         mydelegate.cpp
         mydelegate.h
-	sevaluator/sevaluator.h
+	${CMAKE_SOURCE_DIR}/sevaluator/sevaluator.h
         resource.qrc
 )
 
@@ -85,3 +85,5 @@ endif()
 
 
 install(TARGETS scalculator DESTINATION bin)
+install(FILES misc/scalculator.svg DESTINATION share/icons/hicolor/scalcable/apps)
+install(FILES misc/scalculator.desktop DESTINATION share/applications)
