@@ -80,7 +80,9 @@ void MainWindow::initButtonData() {
     advanceButtons << ui->pushButton_sin << ui->pushButton_cos << ui->pushButton_tan
                    << ui->pushButton_ln << ui->pushButton_lg << ui->pushButton_log2
                    << ui->pushButton_exp << ui->pushButton_root << ui->pushButton_e
-                   << ui->shiftButton << ui->pushButton_ans << ui->pushButton_pi;
+                   << ui->shiftButton << ui->pushButton_ans << ui->pushButton_pi
+                   << ui->pushButton_rand << ui->pushButton_fact << ui->pushButton_rnd
+                   << ui->pushButton_const;
 
     data[ui->pushButton_sin] = "sin";
     connect(ui->pushButton_sin, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
@@ -105,15 +107,24 @@ void MainWindow::initButtonData() {
     data[ui->pushButton_pi] = "π";
     connect(ui->pushButton_pi, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
 
+    data[ui->pushButton_rand] = "rand";
+    connect(ui->pushButton_rand, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
+    data[ui->pushButton_fact] = "!";
+    connect(ui->pushButton_fact, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
+    data[ui->pushButton_rnd] = "round";
+    connect(ui->pushButton_rnd, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
+
+    connect(ui->pushButton_rnd, &QPushButton::clicked, this, &MainWindow::handleConstButtonClick);
     connect(ui->shiftButton, &QPushButton::clicked, this, &MainWindow::handleShiftButtonClick);
 
     for (auto i = advanceButtons.begin(); i != advanceButtons.end(); ++i) {
         (*i)->setVisible(false);
     }
 
+    noParamFunc << ui->pushButton_rand;
     oneParamFunc << ui->pushButton_sin << ui->pushButton_cos << ui->pushButton_tan
                  << ui->pushButton_ln << ui->pushButton_lg << ui->pushButton_log2
-                 << ui->pushButton_exp;
+                 << ui->pushButton_exp << ui->pushButton_rnd;
     twoParamFunc << ui->pushButton_root;
 }
 
@@ -136,10 +147,13 @@ void MainWindow::handleNumberButtonClick()
     QString selected = temp.selectedText();
     auto *btn = qobject_cast<QPushButton *>(sender());
     temp.insertText(data[btn]);
+
     if (oneParamFunc.find(btn) != oneParamFunc.end()) {
         temp.insertText("[" + selected + "]");
         temp.movePosition(QTextCursor::PreviousCharacter);
         ui->editArea->setTextCursor(temp);
+    } else if (noParamFunc.find(btn) != noParamFunc.end()) {
+        temp.insertText("[]");
     } else if (twoParamFunc.find(btn) != twoParamFunc.end()) {
         temp.insertText("[" + selected + ", ]");
         temp.movePosition(QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor, 2);
@@ -165,9 +179,15 @@ void MainWindow::handleClearButtonClick() {
     ui->editArea->setText("");
 }
 
-void MainWindow::handleEqualButtonClick() {
+void MainWindow::handleEqualButtonClick()
+{
+    calc(false);
+}
+
+void MainWindow::calc(bool sci_flt)
+{
     std::string input = ui->editArea->toPlainText().toStdString();
-    std::string output = be.calc(input);
+    std::string output = be.calc(input, sci_flt);
     displayResult(output);
     updateHistoryList(input, output);
 }
@@ -182,6 +202,8 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_cos->setText("acos");
         data[ui->pushButton_tan] = "atan";
         ui->pushButton_tan->setText("atan");
+        data[ui->pushButton_rnd] = "floor";
+        ui->pushButton_rnd->setText("flr");
 
         data[ui->pushButton_lf] = "[";
         ui->pushButton_lf->setText("[");
@@ -198,6 +220,9 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_cos->setText("csc");
         data[ui->pushButton_tan] = "cot";
         ui->pushButton_tan->setText("cot");
+        data[ui->pushButton_rnd] = "ceil";
+        ui->pushButton_rnd->setText("ceil");
+
         data[ui->pushButton_lf] = "[";
         ui->pushButton_lf->setText("[");
         data[ui->pushButton_rt] = "]";
@@ -213,6 +238,9 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_cos->setText("cos");
         data[ui->pushButton_tan] = "tan";
         ui->pushButton_tan->setText("tan");
+        data[ui->pushButton_rnd] = "round";
+        ui->pushButton_rnd->setText("rnd");
+
         data[ui->pushButton_lf] = "(";
         ui->pushButton_lf->setText("(");
         data[ui->pushButton_rt] = ")";
@@ -224,6 +252,8 @@ void MainWindow::handleShiftButtonClick()
         ui->pushButton_root_2->setText("√");
     }
 }
+
+void MainWindow::handleConstButtonClick() {}
 
 void MainWindow::handleModeButtonClick()
 {
@@ -243,7 +273,7 @@ void MainWindow::handleModeButtonClick()
 void MainWindow::handleRFButton()
 {
     ui->editArea->setText("flt[ans]");
-    handleEqualButtonClick();
+    calc(true);
 }
 
 void MainWindow::handleHistoryButton()

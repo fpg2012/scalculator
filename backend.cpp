@@ -23,11 +23,11 @@ void Backend::initErrorMap()
     error_map_[E_INVALID_PARAMETER] = "Error::InvalidParameter";
 }
 
-std::string Backend::calc(std::string input)
+std::string Backend::calc(std::string input, bool sci_flt)
 {
     char *output;
     std::string temp;
-    ErrorType error = sevaluator_calc(input.c_str(), &output, se_hist_list_, 10);
+    ErrorType error = sevaluator_calc(input.c_str(), &output, se_hist_list_, 10, sci_flt || sci_flt_);
     if (error != E_OK) {
         temp = error_map_[error];
     } else {
@@ -45,7 +45,7 @@ int Backend::getHistoryListLength()
 HistoryItemData Backend::getKthHistory(int k)
 {
     FullResult *result = sevaluator_history_get(se_hist_list_, k);
-    char *o_str = sevaluator_result_get_str(result, 10);
+    char *o_str = sevaluator_result_get_str(result, 10, false);
     const char *i_str = sevaluator_history_get_input(se_hist_list_, k);
     QString output(o_str);
     QString input(i_str);

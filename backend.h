@@ -11,13 +11,17 @@ class Backend
 public:
     Backend();
 	~Backend();
-    std::string calc(std::string input);
+    std::string calc(std::string input, bool sci_flt = false);
     int getHistoryListLength();
     HistoryItemData getKthHistory(int k);
+    void setDigits(unsigned digits) { digits_ = digits; }
+    void setSciFlt(bool sci_flt) { sci_flt_ = sci_flt; }
 
 private:
     std::map<ErrorType, const char *> error_map_;
     HistoryList *se_hist_list_;
+    unsigned digits_ = 10;
+    bool sci_flt_ = false;
     void initErrorMap();
 };
 

@@ -27,6 +27,7 @@ private:
     QMap<QPushButton*, QString> data;
     QVector<QPushButton*> numberButtons;
     QVector<QPushButton *> advanceButtons;
+    QSet<QPushButton *> noParamFunc;
     QSet<QPushButton *> oneParamFunc;
     QSet<QPushButton *> twoParamFunc;
     Backend be;
@@ -56,6 +57,8 @@ private:
     void handleShiftButtonClick();
     void handleModeButtonClick();
     void handleRFButton();
+    void handleConstButtonClick();
+
     void handleHistoryButton();
     void handleHistorySelect();
     void displayResult(const std::string &str);
@@ -65,5 +68,7 @@ private:
 
     void showAboutDialog();
     void showUsageDialog();
+
+    void calc(bool sci_flt = false);
 };
 #endif // MAINWINDOW_H
