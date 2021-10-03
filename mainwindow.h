@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "backend.h"
+#include "constantdialog.h"
 #include "mydelegate.h"
 #include <QMainWindow>
 #include <QMap>
@@ -26,7 +27,7 @@ private:
     Ui::MainWindow *ui;
     QMap<QPushButton*, QString> data;
     QVector<QPushButton*> numberButtons;
-    QVector<QPushButton *> advanceButtons;
+    QVector<QWidget *> advanceWidgets;
     QSet<QPushButton *> noParamFunc;
     QSet<QPushButton *> oneParamFunc;
     QSet<QPushButton *> twoParamFunc;
@@ -42,6 +43,7 @@ private:
     } mode_state_;
     QStandardItemModel *itemModel;
     MyDelegate *myDelegate;
+    ConstantDialog *constDialog_;
 
     void initButtonData();
     void initMenu();
@@ -58,9 +60,13 @@ private:
     void handleModeButtonClick();
     void handleRFButton();
     void handleConstButtonClick();
-
     void handleHistoryButton();
+
+    void handleSciButtonStateChange();
+
     void handleHistorySelect();
+    void handleConstSelect(QString name);
+
     void displayResult(const std::string &str);
     void updateHistoryList(const std::string &input, const std::string &output);
     void myAdjustSize();

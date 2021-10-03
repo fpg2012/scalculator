@@ -33,10 +33,16 @@ set(PROJECT_SOURCES
         mainwindow.h
         mainwindow.ui
         historyitemdata.h
+        constitemdata.h
         backend.h
         backend.cpp
         mydelegate.cpp
         mydelegate.h
+        constantdialog.cpp
+        constantdialog.h
+        constantdialog.ui
+        constdelegate.h
+        constdelegate.cpp
 	sevaluator/sevaluator.h
         resource.qrc
 )

@@ -55,3 +55,8 @@ HistoryItemData Backend::getKthHistory(int k)
     hid.output = output;
     return hid;
 }
+
+const Constant *Backend::getConstList() const
+{
+    return sevaluator_result_get_const_table();
+}

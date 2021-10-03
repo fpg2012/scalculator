@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "constantdialog.h"
 #include <cmath>
 #include <string>
 #include <QDebug>
@@ -10,7 +11,8 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), shift_state_(ShiftSin), mode_state_(ModeSimple),
-      itemModel(new QStandardItemModel(this)), myDelegate(new MyDelegate(this))
+      itemModel(new QStandardItemModel(this)), myDelegate(new MyDelegate(this)),
+      constDialog_(new ConstantDialog(&be, this))
 {
     ui->setupUi(this);
     setGeometry(centralWidget()->geometry());
@@ -77,12 +79,12 @@ void MainWindow::initButtonData() {
     connect(ui->backspaceButton, &QPushButton::clicked, this, &MainWindow::handleBackspaceButtonClick);
     connect(ui->pushButton_eq, &QPushButton::clicked, this, &MainWindow::handleEqualButtonClick);
 
-    advanceButtons << ui->pushButton_sin << ui->pushButton_cos << ui->pushButton_tan
+    advanceWidgets << ui->pushButton_sin << ui->pushButton_cos << ui->pushButton_tan
                    << ui->pushButton_ln << ui->pushButton_lg << ui->pushButton_log2
                    << ui->pushButton_exp << ui->pushButton_root << ui->pushButton_e
                    << ui->shiftButton << ui->pushButton_ans << ui->pushButton_pi
                    << ui->pushButton_rand << ui->pushButton_fact << ui->pushButton_rnd
-                   << ui->pushButton_const;
+                   << ui->pushButton_const << ui->checkBox_sci;
 
     data[ui->pushButton_sin] = "sin";
     connect(ui->pushButton_sin, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
@@ -114,10 +116,10 @@ void MainWindow::initButtonData() {
     data[ui->pushButton_rnd] = "round";
     connect(ui->pushButton_rnd, &QPushButton::clicked, this, &MainWindow::handleNumberButtonClick);
 
-    connect(ui->pushButton_rnd, &QPushButton::clicked, this, &MainWindow::handleConstButtonClick);
+    connect(ui->pushButton_const, &QPushButton::clicked, this, &MainWindow::handleConstButtonClick);
     connect(ui->shiftButton, &QPushButton::clicked, this, &MainWindow::handleShiftButtonClick);
 
-    for (auto i = advanceButtons.begin(); i != advanceButtons.end(); ++i) {
+    for (auto i = advanceWidgets.begin(); i != advanceWidgets.end(); ++i) {
         (*i)->setVisible(false);
     }
 
@@ -126,6 +128,12 @@ void MainWindow::initButtonData() {
                  << ui->pushButton_ln << ui->pushButton_lg << ui->pushButton_log2
                  << ui->pushButton_exp << ui->pushButton_rnd;
     twoParamFunc << ui->pushButton_root;
+
+    connect(constDialog_, &ConstantDialog::constSelected, this, &MainWindow::handleConstSelect);
+    connect(ui->checkBox_sci,
+            &QCheckBox::stateChanged,
+            this,
+            &MainWindow::handleSciButtonStateChange);
 }
 
 void MainWindow::initMenu()
@@ -154,14 +162,22 @@ void MainWindow::handleNumberButtonClick()
         ui->editArea->setTextCursor(temp);
     } else if (noParamFunc.find(btn) != noParamFunc.end()) {
         temp.insertText("[]");
+        ui->editArea->setTextCursor(temp);
     } else if (twoParamFunc.find(btn) != twoParamFunc.end()) {
         temp.insertText("[" + selected + ", ]");
-        temp.movePosition(QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor, 2);
+        temp.movePosition(QTextCursor::PreviousCharacter);
+        ui->editArea->setTextCursor(temp);
     } else if (data[btn] == "(") {
         temp.insertText(selected + ")");
+        if (selected == "") {
+            temp.movePosition(QTextCursor::PreviousCharacter);
+        }
         ui->editArea->setTextCursor(temp);
     } else if (data[btn] == "[") {
         temp.insertText(selected + "]");
+        if (selected == "") {
+            temp.movePosition(QTextCursor::PreviousCharacter);
+        }
         ui->editArea->setTextCursor(temp);
     }
 }
@@ -253,7 +269,10 @@ void MainWindow::handleShiftButtonClick()
     }
 }
 
-void MainWindow::handleConstButtonClick() {}
+void MainWindow::handleConstButtonClick()
+{
+    constDialog_->show();
+}
 
 void MainWindow::handleModeButtonClick()
 {
@@ -261,11 +280,13 @@ void MainWindow::handleModeButtonClick()
     if (mode_state_ == ModeSimple) {
         mode_state_ = ModeAdvance;
         flag = true;
+        ui->checkBox_sci->setChecked(true);
     } else {
         mode_state_ = ModeSimple;
         flag = false;
+        ui->checkBox_sci->setChecked(false);
     }
-    for (auto i = advanceButtons.begin(); i != advanceButtons.end(); ++i) {
+    for (auto i = advanceWidgets.begin(); i != advanceWidgets.end(); ++i) {
         (*i)->setVisible(flag);
     }
 }
@@ -286,6 +307,18 @@ void MainWindow::handleHistorySelect()
     QTextCursor temp = ui->editArea->textCursor();
     QModelIndex index = ui->historyList->currentIndex();
     temp.insertText("hist[" + QString::number(index.row()) + "]");
+}
+
+void MainWindow::handleConstSelect(QString name)
+{
+    QTextCursor temp = ui->editArea->textCursor();
+    temp.insertText(name);
+    ui->editArea->setTextCursor(temp);
+}
+
+void MainWindow::handleSciButtonStateChange()
+{
+    be.setSciFlt(ui->checkBox_sci->isChecked());
 }
 
 void MainWindow::displayResult(const std::string &str)

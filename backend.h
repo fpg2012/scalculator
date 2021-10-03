@@ -14,6 +14,7 @@ public:
     std::string calc(std::string input, bool sci_flt = false);
     int getHistoryListLength();
     HistoryItemData getKthHistory(int k);
+    const Constant *getConstList() const;
     void setDigits(unsigned digits) { digits_ = digits; }
     void setSciFlt(bool sci_flt) { sci_flt_ = sci_flt; }
 
