@@ -4,6 +4,7 @@
 #include "backend.h"
 #include "constantdialog.h"
 #include "mydelegate.h"
+#include "unitconvertdialog.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QPushButton>
@@ -44,6 +45,7 @@ private:
     QStandardItemModel *itemModel;
     MyDelegate *myDelegate;
     ConstantDialog *constDialog_;
+    UnitConvertDialog *unitDialog_;
 
     void initButtonData();
     void initMenu();
@@ -61,11 +63,13 @@ private:
     void handleRFButton();
     void handleConstButtonClick();
     void handleHistoryButton();
+    void handleUnitButton();
 
     void handleSciButtonStateChange();
 
     void handleHistorySelect();
-    void handleConstSelect(QString name);
+    void handleConstSelect(const QString &name);
+    void handleUnitConvertSelect(const QString &name);
 
     void displayResult(const std::string &str);
     void updateHistoryList(const std::string &input, const std::string &output);

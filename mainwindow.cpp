@@ -12,7 +12,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), shift_state_(ShiftSin), mode_state_(ModeSimple),
       itemModel(new QStandardItemModel(this)), myDelegate(new MyDelegate(this)),
-      constDialog_(new ConstantDialog(&be, this))
+      constDialog_(new ConstantDialog(&be, this)), unitDialog_(new UnitConvertDialog(this))
 {
     ui->setupUi(this);
     setGeometry(centralWidget()->geometry());
@@ -130,10 +130,16 @@ void MainWindow::initButtonData() {
     twoParamFunc << ui->pushButton_root;
 
     connect(constDialog_, &ConstantDialog::constSelected, this, &MainWindow::handleConstSelect);
+    connect(unitDialog_,
+            &UnitConvertDialog::formulaGenerated,
+            this,
+            &MainWindow::handleUnitConvertSelect);
+
     connect(ui->checkBox_sci,
             &QCheckBox::stateChanged,
             this,
             &MainWindow::handleSciButtonStateChange);
+    connect(ui->unitButton, &QPushButton::clicked, this, &MainWindow::handleUnitButton);
 }
 
 void MainWindow::initMenu()
@@ -302,6 +308,11 @@ void MainWindow::handleHistoryButton()
     ui->historyList->setVisible(!ui->historyList->isVisible());
 }
 
+void MainWindow::handleUnitButton()
+{
+    unitDialog_->show();
+}
+
 void MainWindow::handleHistorySelect()
 {
     QTextCursor temp = ui->editArea->textCursor();
@@ -309,11 +320,18 @@ void MainWindow::handleHistorySelect()
     temp.insertText("hist[" + QString::number(index.row()) + "]");
 }
 
-void MainWindow::handleConstSelect(QString name)
+void MainWindow::handleConstSelect(const QString &name)
 {
     QTextCursor temp = ui->editArea->textCursor();
     temp.insertText(name);
     ui->editArea->setTextCursor(temp);
+}
+
+void MainWindow::handleUnitConvertSelect(const QString &formula)
+{
+    calc();
+    ui->editArea->setText(formula);
+    calc();
 }
 
 void MainWindow::handleSciButtonStateChange()

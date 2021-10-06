@@ -27,7 +27,7 @@ ConstantDialog::ConstantDialog(Backend *be, QWidget *parent)
         itemModel_->appendRow(item);
     }
 
-    connect(ui->constList, &QListView::clicked, this, &ConstantDialog::handleConstListSelected);
+    connect(ui->constList, &QListView::clicked, this, &ConstantDialog::handleConstListSelected);    
 }
 
 ConstantDialog::~ConstantDialog()

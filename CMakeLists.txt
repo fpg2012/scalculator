@@ -29,20 +29,18 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        mainwindow.cpp mainwindow.h mainwindow.ui
         historyitemdata.h
         constitemdata.h
-        backend.h
-        backend.cpp
-        mydelegate.cpp
-        mydelegate.h
-        constantdialog.cpp
-        constantdialog.h
-        constantdialog.ui
-        constdelegate.h
-        constdelegate.cpp
+        backend.h backend.cpp
+        mydelegate.cpp mydelegate.h
+        constantdialog.cpp constantdialog.h constantdialog.ui
+        constdelegate.h constdelegate.cpp
+        unitconvertdialog.h unitconvertdialog.cpp unitconvertdialog.ui
+        unitmanager.h unitmanager.cpp
+        unit.h
+        unitcategory.h
+        unitdelegate.h unitdelegate.cpp
 	${CMAKE_SOURCE_DIR}/sevaluator/sevaluator.h
         resource.qrc
 )
