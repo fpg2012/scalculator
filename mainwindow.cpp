@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QTimer>
+#include <QTranslator>
 #include <QVariant>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->historyList->setItemDelegate(myDelegate);
     ui->historyList->setModel(itemModel);
     ui->historyList->setVisible(false);
+    ui->resultScrollArea->setStyleSheet("background-color: rgba(250, 250, 250, 0);");
     //    ui->historyList->setStyleSheet("background-color: rgba(250, 250, 250, 0);");
 }
 
@@ -342,16 +344,18 @@ void MainWindow::handleSciButtonStateChange()
 void MainWindow::displayResult(const std::string &str)
 {
     QString toDisplay;
+    int lw = 20;
+    //    lw = ui->resultScrollArea->width() / 11 - 5;
     int cnt = 0;
     for (const char ch : str) {
-       if (cnt % 20 == 0 && cnt != 0) {
-           toDisplay.append('\n');
-       }
-       toDisplay.append(ch);
-       ++cnt;
+        if (cnt % lw == 0 && cnt != 0) {
+            toDisplay.append('\n');
+        }
+        toDisplay.append(ch);
+        ++cnt;
     }
     ui->resultArea->setText(toDisplay);
-    ui->resultArea->setMinimumHeight(10 * ceil((double) cnt / 20));
+    ui->resultArea->setMinimumHeight(15 * ceil((double) cnt / 20));
     QTimer::singleShot(1, this, &MainWindow::myAdjustSize);
 }
 
@@ -417,15 +421,16 @@ void MainWindow::showAboutDialog()
     QMessageBox::about(
         this,
         tr("about"),
-        "<p><b>Scalculator</b>, simple but full-fledged calculator<br>"
-        "with <b>Sevaluator</b> as backend to evaluate expressions.</p>"
-        "<ul><li><a href='https://github.com/fpg2012/scalculator'> "
-        "https://github.com/fpg2012/scalculator</a></li>"
-        "<li><a "
-        "href='https://github.com/fpg2012/sevaluator'>https://github.com/fpg2012/sevaluator</a></"
-        "li></ul>"
-        "Copyright nth233&lt;fpg2012@yeah.net&gt;, chikangxi&lt;chikangxi@hotmail.com&gt;, Meng "
-        "Yuan 2021 ");
+        tr("<p><b>Scalculator</b>, simple but full-fledged calculator<br>"
+           "with <b>Sevaluator</b> as backend to evaluate expressions.</p>"
+           "<ul><li><a href='https://github.com/fpg2012/scalculator'> "
+           "https://github.com/fpg2012/scalculator</a></li>"
+           "<li><a "
+           "href='https://github.com/fpg2012/sevaluator'>https://github.com/fpg2012/sevaluator</"
+           "a></"
+           "li></ul>"
+           "Copyright nth233&lt;fpg2012@yeah.net&gt;, chikangxi&lt;chikangxi@hotmail.com&gt;, Meng "
+           "Yuan 2021 "));
 }
 
 void MainWindow::showUsageDialog()
@@ -448,8 +453,9 @@ void MainWindow::showUsageDialog()
            "the last result</li>"
            "<li>root[a, k] means the kth root of a</li>"
            "<li>press R->F to convert the result to float number instead of fractions</li>"
-           "<li>random[] function generates an integer uniformly at random between 0 and 256, this "
-           "feature "
-           "might change in future versions</li>"
+           "<li>rand[] or random[] function generates an float uniformly at random between 0 and "
+           "1</li>"
+           "<li>rnd[], ceil[] and floor[] round float to integer</li>"
+           "<li>press 'ℂ' button to show constant table</li>"
            "</ol>"));
 }

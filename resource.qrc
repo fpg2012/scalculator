@@ -5,4 +5,7 @@
     <qresource prefix="/pic">
         <file alias="icon">misc/scalculator.png</file>
     </qresource>
+    <qresource prefix="/lang">
+        <file>zh_CN.qm</file>
+    </qresource>
 </RCC>

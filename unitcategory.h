@@ -3,6 +3,7 @@
 #include "unit.h"
 #include <QObject>
 #include <QString>
+#include <QVector>
 
 struct UnitCategory : QObject
 {
