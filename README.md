@@ -6,3 +6,10 @@ Simple yet full-fledged calculator, with [Sevaluator](https://github.com/fpg2012
 
 Big number is supported.
 
+# INSTALL
+mkdir build && cd build;
+cmake .. && make;
+
+# make packages
+cd build;
+cpack;
