@@ -4,6 +4,7 @@
 #include <cmath>
 #include <string>
 #include <QDebug>
+#include <QFont>
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QTimer>

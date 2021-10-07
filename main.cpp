@@ -9,7 +9,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QFontDatabase::addApplicationFont(":/font/jbmono.ttf");
+    int handle = QFontDatabase::addApplicationFont(":/font/misc/jbmono.ttf");
+    qDebug() << handle << " " << QFontDatabase::applicationFontFamilies(handle);
 
     QTranslator trans;
     trans.load(":/lang/zh_CN.qm");
