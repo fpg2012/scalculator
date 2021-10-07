@@ -24,8 +24,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
+set(TS_FILES zh_CN.ts)
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -61,6 +63,9 @@ else()
         )
     endif()
 endif()
+
+#qt5_create_translation(QM_FILES ${PROJECT_SOURCE_DIR} ${TS_FILES})
+qt5_add_translation(QM_FILES ${TS_FILES})
 
 add_custom_target(
 	sevaluator_lib

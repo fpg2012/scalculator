@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QTimer>
+#include <QTranslator>
 #include <QVariant>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -420,15 +421,16 @@ void MainWindow::showAboutDialog()
     QMessageBox::about(
         this,
         tr("about"),
-        "<p><b>Scalculator</b>, simple but full-fledged calculator<br>"
-        "with <b>Sevaluator</b> as backend to evaluate expressions.</p>"
-        "<ul><li><a href='https://github.com/fpg2012/scalculator'> "
-        "https://github.com/fpg2012/scalculator</a></li>"
-        "<li><a "
-        "href='https://github.com/fpg2012/sevaluator'>https://github.com/fpg2012/sevaluator</a></"
-        "li></ul>"
-        "Copyright nth233&lt;fpg2012@yeah.net&gt;, chikangxi&lt;chikangxi@hotmail.com&gt;, Meng "
-        "Yuan 2021 ");
+        tr("<p><b>Scalculator</b>, simple but full-fledged calculator<br>"
+           "with <b>Sevaluator</b> as backend to evaluate expressions.</p>"
+           "<ul><li><a href='https://github.com/fpg2012/scalculator'> "
+           "https://github.com/fpg2012/scalculator</a></li>"
+           "<li><a "
+           "href='https://github.com/fpg2012/sevaluator'>https://github.com/fpg2012/sevaluator</"
+           "a></"
+           "li></ul>"
+           "Copyright nth233&lt;fpg2012@yeah.net&gt;, chikangxi&lt;chikangxi@hotmail.com&gt;, Meng "
+           "Yuan 2021 "));
 }
 
 void MainWindow::showUsageDialog()
@@ -451,8 +453,9 @@ void MainWindow::showUsageDialog()
            "the last result</li>"
            "<li>root[a, k] means the kth root of a</li>"
            "<li>press R->F to convert the result to float number instead of fractions</li>"
-           "<li>random[] function generates an integer uniformly at random between 0 and 256, this "
-           "feature "
-           "might change in future versions</li>"
+           "<li>rand[] or random[] function generates an float uniformly at random between 0 and "
+           "1</li>"
+           "<li>rnd[], ceil[] and floor[] round float to integer</li>"
+           "<li>press 'ℂ' button to show constant table</li>"
            "</ol>"));
 }
