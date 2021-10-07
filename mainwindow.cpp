@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->historyList->setItemDelegate(myDelegate);
     ui->historyList->setModel(itemModel);
     ui->historyList->setVisible(false);
+    ui->resultScrollArea->setStyleSheet("background-color: rgba(250, 250, 250, 0);");
     //    ui->historyList->setStyleSheet("background-color: rgba(250, 250, 250, 0);");
 }
 
@@ -342,16 +343,18 @@ void MainWindow::handleSciButtonStateChange()
 void MainWindow::displayResult(const std::string &str)
 {
     QString toDisplay;
+    int lw = 20;
+    //    lw = ui->resultScrollArea->width() / 11 - 5;
     int cnt = 0;
     for (const char ch : str) {
-       if (cnt % 20 == 0 && cnt != 0) {
-           toDisplay.append('\n');
-       }
-       toDisplay.append(ch);
-       ++cnt;
+        if (cnt % lw == 0 && cnt != 0) {
+            toDisplay.append('\n');
+        }
+        toDisplay.append(ch);
+        ++cnt;
     }
     ui->resultArea->setText(toDisplay);
-    ui->resultArea->setMinimumHeight(10 * ceil((double) cnt / 20));
+    ui->resultArea->setMinimumHeight(15 * ceil((double) cnt / 20));
     QTimer::singleShot(1, this, &MainWindow::myAdjustSize);
 }
 
