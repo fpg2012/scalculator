@@ -89,5 +89,8 @@ endif()
 
 
 install(TARGETS scalculator DESTINATION bin)
-install(FILES misc/scalculator.svg DESTINATION share/icons/hicolor/scalcable/apps)
+install(FILES misc/scalculator.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES misc/scalculator.desktop DESTINATION share/applications)
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(Packing)
