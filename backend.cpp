@@ -20,7 +20,8 @@ void Backend::initErrorMap()
     error_map_[E_NEGATIVE_ROOT] = "Error::NegativeRoot";
     error_map_[E_NO_HISTORY] = "Error::NoHistory";
     error_map_[E_TYPE] = "Error::ImproperType";
-    error_map_[E_INVALID_PARAMETER] = "Error::InvalidParameter";
+    error_map_[E_INVALID_PARAMETER] = "Error::InvalidParam";
+    error_map_[E_UNKNOWN_TOKEN] = "Error::UnknownToken";
 }
 
 std::string Backend::calc(std::string input, bool sci_flt)
