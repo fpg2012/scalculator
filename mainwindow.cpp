@@ -356,7 +356,7 @@ void MainWindow::displayResult(const std::string &str)
         ++cnt;
     }
     ui->resultArea->setText(toDisplay);
-    ui->resultArea->setMinimumHeight(15 * ceil((double) cnt / 20));
+    ui->resultArea->setMinimumHeight(22.1 * ceil((double) cnt / lw));
     QTimer::singleShot(1, this, &MainWindow::myAdjustSize);
 }
 
