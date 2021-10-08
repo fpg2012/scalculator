@@ -30,7 +30,11 @@ std::string Backend::calc(std::string input, bool sci_flt)
     std::string temp;
     ErrorType error = sevaluator_calc(input.c_str(), &output, se_hist_list_, 10, sci_flt || sci_flt_);
     if (error != E_OK) {
-        temp = error_map_[error];
+        if (error_map_.find(error) == error_map_.end()) {
+            temp = "Error";
+        } else {
+            temp = error_map_[error];
+        }
     } else {
         temp = output;
         free(output);
