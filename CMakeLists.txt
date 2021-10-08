@@ -29,6 +29,9 @@ set(TS_FILES zh_CN.ts)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp mainwindow.h mainwindow.ui
@@ -75,6 +78,7 @@ target_link_libraries(scalculator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
 	${CMAKE_SOURCE_DIR}/sevaluator/libsevaluator.a
 	gmp
 	mpfr
+        Threads::Threads
 	)
 
 add_dependencies(scalculator sevaluator_lib)

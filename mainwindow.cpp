@@ -350,13 +350,14 @@ void MainWindow::displayResult(const std::string &str)
     int cnt = 0;
     for (const char ch : str) {
         if (cnt % lw == 0 && cnt != 0) {
-            toDisplay.append('\n');
+            toDisplay.append(' ');
         }
         toDisplay.append(ch);
         ++cnt;
     }
     ui->resultArea->setText(toDisplay);
-    ui->resultArea->setMinimumHeight(22.1 * ceil((double) cnt / lw));
+    ui->resultArea->adjustSize();
+    //    ui->resultArea->setMinimumHeight(22.1 * ceil((double) cnt / lw));
     QTimer::singleShot(1, this, &MainWindow::myAdjustSize);
 }
 

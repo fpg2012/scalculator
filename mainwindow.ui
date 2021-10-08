@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>516</height>
+    <height>546</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1085,8 +1085,14 @@
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
                   <property name="margin">
                    <number>7</number>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
                   </property>
                  </widget>
                 </item>
