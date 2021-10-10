@@ -30,62 +30,20 @@ void Backend::initErrorMap()
 
 std::string Backend::calc(std::string input, bool sci_flt)
 {
-    //    std::packaged_task<std::string()> task([&] {
-    //        char *output;
-    //        std::string temp;
-    //        ErrorType error = sevaluator_calc(input.c_str(),
-    //                                          &output,
-    //                                          se_hist_list_,
-    //                                          10,
-    //                                          sci_flt || sci_flt_);
-    //        if (error != E_OK) {
-    //            if (error_map_.find(error) == error_map_.end()) {
-    //                temp = "Error";
-    //            } else {
-    //                temp = error_map_[error];
-    //            }
-    //        } else {
-    //            temp = output;
-    //            free(output);
-    //        }
-    //        return temp;
-    //    });
-
-    //    std::future<std::string> f1 = task.get_future();
-    //    std::thread t(std::move(task));
-
-    std::promise<std::string> p;
-    std::future<std::string> f3 = p.get_future();
-    std::thread([=, &p] {
-        char *output;
-        std::string temp;
-        ErrorType error = sevaluator_calc(input.c_str(),
-                                          &output,
-                                          se_hist_list_,
-                                          10,
-                                          sci_flt || sci_flt_);
-        if (error != E_OK) {
-            if (error_map_.find(error) == error_map_.end()) {
-                temp = "Error";
-            } else {
-                temp = error_map_[error];
-            }
+    char *output;
+    std::string temp;
+    ErrorType error = sevaluator_calc(input.c_str(), &output, se_hist_list_, 10, sci_flt || sci_flt_);
+    if (error != E_OK) {
+        if (error_map_.find(error) == error_map_.end()) {
+            temp = "Error";
         } else {
-            temp = output;
-            free(output);
-        };
-        p.set_value_at_thread_exit(temp);
-    }).detach();
-
-    auto res = f3.wait_for(std::chrono::seconds(2));
-    std::string ret;
-    if (res == std::future_status::timeout) {
-        ret = "Error::Timeout";
+            temp = error_map_[error];
+        }
     } else {
-        ret = f3.get();
+        temp = output;
+        free(output);
     }
-    //    t.join();
-    return ret;
+    return temp;
 }
 
 int Backend::getHistoryListLength()
