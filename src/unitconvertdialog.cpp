@@ -1,5 +1,5 @@
 #include "unitconvertdialog.h"
-#include "ui_unitconvertdialog.h"
+#include "../ui/ui_unitconvertdialog.h"
 #include <QComboBox>
 
 UnitConvertDialog::UnitConvertDialog(QWidget *parent)

@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QTranslator>
 
@@ -23,7 +22,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
-    QDesktopWidget *temp = QApplication::desktop();
-    w.move(temp->width() / 5, temp->height() / 5);
+    // QDesktopWidget *temp = QApplication::desktop();
+    // w.move(temp->width() / 5, temp->height() / 5);
     return a.exec();
 }

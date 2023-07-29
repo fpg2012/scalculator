@@ -33,19 +33,19 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp mainwindow.h mainwindow.ui
-        historyitemdata.h
-        constitemdata.h
-        backend.h backend.cpp
-        mydelegate.cpp mydelegate.h
-        constantdialog.cpp constantdialog.h constantdialog.ui
-        constdelegate.h constdelegate.cpp
-        unitconvertdialog.h unitconvertdialog.cpp unitconvertdialog.ui
-        unitmanager.h unitmanager.cpp
-        unit.h
-        unitcategory.h
-        unitdelegate.h unitdelegate.cpp
+        src/main.cpp
+        src/mainwindow.cpp src/mainwindow.h ui/mainwindow.ui
+        src/historyitemdata.h
+        src/constitemdata.h
+        src/backend.h src/backend.cpp
+        src/mydelegate.cpp src/mydelegate.h
+        src/constantdialog.cpp src/constantdialog.h ui/constantdialog.ui
+        src/constdelegate.h src/constdelegate.cpp
+        src/unitconvertdialog.h src/unitconvertdialog.cpp ui/unitconvertdialog.ui
+        src/unitmanager.h src/unitmanager.cpp
+        src/unit.h
+        src/unitcategory.h
+        src/unitdelegate.h src/unitdelegate.cpp
 	${CMAKE_SOURCE_DIR}/sevaluator/sevaluator.h
         resource.qrc
 )
