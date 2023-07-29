@@ -10,6 +10,22 @@ Big number is supported.
 mkdir build && cd build;
 cmake .. && make;
 
+## For ArchLinux
+
+Scalculator is availible on AUR
+
+```
+git clone https://aur.archlinux.org/scalculator.git
+cd scalculator
+makepkg -si
+```
+or use a AUR helper (e.g. yay)
+
+```
+yay -S scalculator
+```
+
 # make packages
+
 cd build;
 cpack;
